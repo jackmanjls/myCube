@@ -1,0 +1,253 @@
+/* define common style for all elements */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .8)), url(images/bg.jpg) no-repeat;
+    background-size: cover;
+}
+
+.viewport {
+    width: 42vw;
+    height: 21vw;
+    /* background-color: #fff; */
+
+    /* center viewport, standard approach */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* create 3D space for cube, nothing changes here */
+    perspective: 1300px;
+}
+
+/* create shadow */
+.viewport::after {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 20%;
+    background-color: #000;
+    z-index: -1;
+    top: 120%;
+    left: -10%;
+
+    /* make this actually look as a shadow */
+    filter: blur(30px);
+}
+
+/* work on cube */
+.cube {
+    width: 100%;
+    height: 33.33%;
+    ;
+    /* background-color: #ccc; */
+    transform-style: preserve-3d;
+
+    position: relative;
+
+    /* side testing */
+    /* transform: rotateY(0deg); */
+    /* back side testing */
+    /* transform: rotateY(180deg); */
+    /* left testing */
+    /* transform: rotateY(90deg); */
+    /* right */
+    /* transform: rotateY(-90deg); */
+}
+
+/* need cube to have slight interval when rotating */
+.cube-1 {
+    transition: transform .4s;
+}
+
+/* cube-2 needs adjustment for space between next cube */
+.cube-2 {
+    z-index: 10;
+    transition: transform .4s .2s;
+}
+
+.cube-3 {
+    transition: transform .4s .4s;
+}
+
+/* give common style to all sides of cube */
+.face {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    position: absolute;
+
+    /* this demos the .front transform 21vw */
+    /* opacity: 0.7; */
+    /* font-size: 30px;
+    color: white; */
+}
+
+/* ***************************************************** */
+/* work on placing cube in 3D space */
+.front {
+    /* the 21vw uses the viewport width:42vw */
+    /* the front face is moved from center to front */
+    transform: translateZ(21vw);
+}
+
+.cube-1 .front {
+    background: url(images/slide-img-1.jpg) no-repeat 50% 0;
+    background-size: cover;
+}
+
+/* each cube is -7vw (viewport width) high */
+.cube-2 .front {
+    background: url(images/slide-img-1.jpg) no-repeat 50% -7vw;
+    background-size: cover;
+}
+
+.cube-3 .front {
+    background: url(images/slide-img-1.jpg) no-repeat 50% -14vw;
+    background-size: cover;
+}
+
+/* ***************************************************** */
+.back {
+    /* the 21vw uses the viewport width:42vw */
+    /* the front face is moved from center to front */
+    transform: translateZ(-21vw) rotateY(180deg);
+}
+
+.cube-1 .back {
+    background: url(images/slide-img-2.jpg) no-repeat 50% 0;
+    background-size: cover;
+}
+
+/* each cube is -7vw (viewport width) high */
+.cube-2 .back {
+    background: url(images/slide-img-2.jpg) no-repeat 50% -7vw;
+    background-size: cover;
+}
+
+.cube-3 .back {
+    background: url(images/slide-img-2.jpg) no-repeat 50% -14vw;
+    background-size: cover;
+}
+
+/* ***************************************************** */
+
+.left {
+    transform: translateX(-21vw) rotateY(-90deg);
+}
+
+.cube-1 .left {
+    background: url(images/slide-img-3.jpg) no-repeat 50% 0;
+    background-size: cover;
+}
+
+/* each cube is -7vw (viewport width) high */
+.cube-2 .left {
+    background: url(images/slide-img-3.jpg) no-repeat 50% -7vw;
+    background-size: cover;
+}
+
+.cube-3 .left {
+    background: url(images/slide-img-3.jpg) no-repeat 50% -14vw;
+    background-size: cover;
+}
+
+/* ***************************************************** */
+
+.right {
+    transform: translateX(21vw) rotateY(90deg);
+}
+
+.cube-1 .right {
+    background: url(images/slide-img-4.jpg) no-repeat 50% 0;
+    background-size: cover;
+}
+
+/* each cube is -7vw (viewport width) high */
+.cube-2 .right {
+    background: url(images/slide-img-4.jpg) no-repeat 50% -7vw;
+    background-size: cover;
+}
+
+.cube-3 .right {
+    background: url(images/slide-img-4.jpg) no-repeat 50% -14vw;
+    background-size: cover;
+}
+
+/* ***************************************************** */
+.top {
+    height: 42vw;
+    background-color: #111;
+    transform: translateY(-21vw) rotateX(90deg);
+}
+
+/* ***************************************************** */
+.bottom {
+    height: 42vw;
+    background-color: #111;
+    /* 14 is 1/3 of 42vw */
+    transform: translateY(-14vw) rotateX(-90deg);
+}
+
+.control {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 40px;
+ 
+ /* put controls in a box and change color */
+    height: 40px;
+    border: 1px solid #fff;
+    background-color: rgba(59,52,50, .7);
+ 
+    /* center the controls in the box */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #111;
+
+    /* make boxes into a circle */
+    border-radius: 100%;
+    cursor: pointer;
+
+    z-index: 100;
+
+    /* use with control:hover */
+    transition: background-color .3s;
+}
+
+/* on hover change bgrd color */
+.control:hover {
+    background-color: rgba(42,38,36,1.0);
+}
+
+/* add for proper rotation of cube */
+/* when we mouse-out from arrow cube doesn't get default position */
+.control i {
+    pointer-events: none;
+}
+
+/* define position for each control */
+.left-arrow {
+    top: 50%;
+    left: -35%;
+    color: white;
+}
+
+.right-arrow {
+    top: 50%;
+    left: 135%;
+    color: white;
+}
+
+.play-pause {
+    top: 140%;
+    left: 120%;
+    color: white;
+}
+
